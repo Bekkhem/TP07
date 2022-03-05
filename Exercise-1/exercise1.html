@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300&display=swap" rel="stylesheet">
+    <title>📚 Crud book</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        .container {
+            position: fixed;
+            height: auto;
+            margin: 0 3%;
+            width: 100%;
+            font-family: 'Oswald', sans-serif;
+        }
+        
+        .header_information_container {
+            background-color: #D3D3D3;
+            width: 20%;
+            height: 8vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: black;
+            font-size: 20px;
+            border-radius: 3px;
+        }
+        
+        .container_Input {
+            height: 100vh;
+            background-color: #D3D3D3;
+            color: black;
+            width: 20%;
+            border-radius: 4px;
+            padding: 10px 15px;
+            margin: 10px 0;
+        }
+        
+        .container_Input input,
+        label {
+            width: 90%;
+            height: 5vh;
+            border-radius: 4px;
+            outline: none;
+            margin: 3px;
+            border: none;
+        }
+        
+        .container_Input input:hover {
+            border-radius: 3px;
+        }
+        
+        .container_Input button {
+            margin-top: 10px;
+            font-size: 15px;
+            width: 60px;
+            height: 30px;
+            border: none;
+            border-radius: 3px;
+            background-color: white;
+        }
+        
+        .container_Input button:hover {
+            background-color: red;
+            color: white;
+            border-radius: 3px;
+        }
+        
+        .container_Input .editBook {
+            visibility: hidden;
+            margin-left: -65px;
+            text-align: center;
+            padding: 5px;
+        }
+        
+        .list {
+            position: relative;
+            margin: 15px 24%;
+            display: flex;
+            flex-wrap: wrap;
+            background-color: #D3D3D3;
+            width: 75%;
+            height: auto;
+            border-radius: 3px;
+            font-family: 'Oswald', sans-serif;
+        }
+        
+        .list .item {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            width: 23%;
+            margin: 1%;
+            text-align: center;
+            border-radius: 3px;
+            /* border: 1px solid black; */
+            background-color: rgb(237, 238, 236);
+        }
+        
+        .list .item:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        }
+        
+        .txt {
+            margin: 1% 24%;
+            background-color: #D3D3D3;
+            width: 75%;
+            height: 8vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 36px;
+            color: black;
+            border-radius: 3px;
+            font-family: 'Oswald', sans-serif;
+        }
+        
+        button {
+            background-color: red;
+            border-radius: 3px;
+            padding: 5px;
+            margin: 3px;
+        }
+        
+        button a {
+            text-decoration: none;
+            color: black;
+        }
+        
+        button:hover {
+            background-color: hsl(0, 100%, 50%, 0.7);
+        }
+        
+        @import url(https://fonts.googleapis.com/css?family=Roboto:100);
+        h1 {
+            font: 2em 'Roboto', sans-serif;
+            margin-bottom: 40px;
+        }
+        
+        .loading {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .loader {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(179, 41, 41, 0.3);
+            border-radius: 50%;
+            border-top-color: rgb(12, 11, 11);
+            animation: spin 1s ease-in-out infinite;
+            -webkit-animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+        
+        @-webkit-keyframes spin {
+            to {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="loading">
+        <div class="loader"></div>
+    </div>
+    <div class="container">
+        <form autocomplete="off" onsubmit="onFormSubmit()">
+            <div class="header_information_container"><span>Input information books here:</span></div>
+            <div class="container_Input">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" placeholder="c programming" />
+                <label for="price">Price</label>
+                <input type="number" name="price" id="perPrice" placeholder="1000" />
+                <label for="category">Category</label>
+                <input type="text" name="category" id="category" placeholder="coding" />
+
+                <button type="submit" class="addBook" id="addBook">Add</button>
+                <button type="submit" class="editBook" id="editBook">Update</button>
+
+
+            </div>
+        </form>
+
+    </div>
+    <div class="txt"><span>List of books!</span></div>
+    <div class="list" id="storeList">
+
+
+        <!-- preview for the display-->
+        <!-- <div class="item">
+            <div class="updateNews">
+                <img src="./Asset/Image/book.png" alt="book" style="width: 80%;">
+                <div>Name: Book1</div>
+                <div>Price: 1500</div>
+                <div>Category: coding</div>
+                <div class="update_btn">
+                    <button class="edit">Edit</button>
+                    <button class="delete">Delete</button>
+                </div>
+            </div>
+        </div> -->
+    </div>
+
+    <script>
+        var idClass = 1;
+        let updateBooks;
+
+
+
+        let books = [{}];
+        const localBook = localStorage.getItem("books");
+        const dataBook = JSON.parse(localBook); //convert to object
+
+        var loading = (value) => {
+            if (value == 'true') {
+                document.getElementsByClassName('loading')[0].style.display = 'flex'
+                document.getElementsByClassName('container')[0].style.display = 'none'
+                document.getElementsByClassName('txt')[0].style.display = 'none'
+                document.getElementsByClassName('list')[0].style.display = 'none'
+            } else {
+                document.getElementsByClassName('container')[0].style.display = 'flex';
+                document.getElementsByClassName('txt')[0].style.display = 'flex';
+                document.getElementsByClassName('loading')[0].style.display = 'none';
+                document.getElementsByClassName('list')[0].style.display = 'flex';
+            }
+        }
+        loading("true");
+
+        var output = '';
+
+        /*load api*/
+        fetch('http://jsonplaceholder.typicode.com/photos').then(async(arrJson) => {
+            let results = await arrJson.json();
+            console.log(results)
+            for (result in results) {
+                output +=
+                    `<div class="item"><div class="updateNews"><img src="${results[result].url}" alt="book" style="width: 80%;"> 
+                        <div class="name">Title: ${results[result].title.toString().substring(0, 10)}...</div>  <div class="price">Id:  ${results[result].id}</div> 
+                        <div class="category">Album ID: ${results[result].albumId}</div><button type="submit" id="see_more"><a href="http://localhost:3000/detail?bookid=${parseInt(result)+1}">See more</a></button>
+                        </div></div></div>`;
+            }
+            document.getElementsByClassName('list')[0].innerHTML = output;
+            setTimeout(() => {
+                loading("false");
+            }, 2000)
+
+        })
+
+        for (book in dataBook) { /*display api*/
+            document.getElementsByClassName('list')[0].innerHTML +=
+                `<div class="item"><div class="updateNews"><img src="./Asset/Image/book.png" alt="book" style="width: 80%;"> 
+            <div class="name">Name: ${dataBook[book].name}</div>  <div class="price">Price:  ${dataBook[book].perPrice}</div> 
+            <div class="category">Category: ${dataBook[book].category}</div> <div class="update_btn"> 
+            <button class="edit" id="${book}" onclick="editB(this.id)">Edit</button><button class="delete" id="${book}" onclick="deleteB(this.id)">Delete</button>
+            </div></div></div>`;
+        }
+
+
+
+        document.getElementById("addBook").addEventListener("click", function() {
+
+            var addName = document.getElementById("name").value;
+            var addPrice = document.getElementById("perPrice").value;
+            var addCategory = document.getElementById("category").value;
+
+            // const databookss = JSON.parse(localStorage.getItem("books"));
+            const getdata = localStorage.getItem('books');
+            let databookss = JSON.parse(getdata);
+            books = Object.assign([{}], databookss);
+
+            let num = 0;
+            if (databookss == null) {
+                num = 0;
+            } else {
+                num = databookss.length;
+            }
+            const book = {
+                name: `${addName}`,
+                perPrice: `${addPrice}`,
+                category: `${addCategory}`
+            }
+
+
+            // books[parseInt(num)] = book;
+            // localStorage.setItem("books", JSON.stringify(books));
+            // document.getElementsByClassName('list')[0].innerHTML +=
+            //     `<div class="item"><div class="updateNews"><img src="./Asset/Image/book.png" alt="book" style="width: 80%;"> 
+            // <div class="name">Name: ${addName}</div>  <div class="price">Price:  ${addPrice}</div> 
+            // <div class="category">Category: ${addCategory}</div>  <div class="update_btn"> 
+            // <button class="edit"  id="${num}" onclick="editB(this.id)">Edit</button><button class="delete"  id="${num}" onclick="deleteB(this.id)">Delete</button>
+            // </div></div></div>`;
+
+        })
+
+        function deleteB(id) {
+            const delete_books = JSON.parse(localStorage.getItem("books"));
+            delete_books.splice(id, 1); // 1 number of index
+            console.log(id);
+            console.log("u delete me (=.=)");
+            document.getElementsByClassName("list")[0].innerHTML = "";
+
+            for (dbook in delete_books) {
+                document.getElementsByClassName('list')[0].innerHTML +=
+                    `<div class="item"><div class="updateNews"><img src="./Asset/Image/book.png" alt="book" style="width: 80%;"> 
+            <div class="name">Name: ${delete_books[dbook].name}</div>  <div class="price">Price:  ${delete_books[dbook].perPrice}</div> 
+            <div class="category">Category: ${delete_books[dbook].category}</div> <div class="update_btn"> 
+            <button class="edit" id="${dbook}" onclick="editB(this.id)">Edit</button><button class="delete" id="${dbook}" onclick="deleteB(this.id)">Delete</button>
+            </div></div></div>`;
+            }
+            localStorage.setItem("books", JSON.stringify(delete_books));
+        }
+
+        function editB(id) {
+            document.getElementById('editBook').style.visibility = "visible";
+            document.getElementById('addBook').style.visibility = "hidden";
+            idClass = id;
+
+            updateBooks = JSON.parse(localStorage.getItem('books'));
+
+            document.getElementById("name").value = `${updateBooks[idClass].name}`;
+            document.getElementById("perPrice").value = `${updateBooks[idClass].perPrice}`;
+            document.getElementById("category").value = `${updateBooks[idClass].category}`;
+        }
+        document.getElementById("editBook").addEventListener("click", function() {
+            var name1 = document.getElementById("name").value;
+            var perPrice1 = document.getElementById("perPrice").value;
+            var cat = document.getElementById("category").value;
+
+            updateBooks[idClass] = {
+                name: `${name1}`,
+                perPrice: `${perPrice1}`,
+                category: `${cat}`
+            }
+
+            localStorage.setItem('books', JSON.stringify(updateBooks));
+
+            document.getElementsByClassName("name")[idClass].innerHTML = `Name: ${name1}`;
+            document.getElementsByClassName("price")[idClass].innerHTML = `Price: ${perPrice1}`;
+            document.getElementsByClassName("category")[idClass].innerHTML = `Category: ${cat}`;
+
+
+            document.getElementById('editBook').style.visibility = "hidden";
+            document.getElementById('addBook').style.visibility = "visible";
+        })
+    </script>
+</body>
+
+</html>
